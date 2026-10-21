@@ -1,0 +1,37 @@
+
+@model List<QuanLyBanHang.Models.InvoiceDetail>
+
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+}
+
+<div class="container mt-4">
+    <h2>Chi tiết hóa đơn</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Mã chi tiết</th>
+                <th>Mã hóa đơn</th>
+                <th>Mã sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.InvoiceId</td>
+                    <td>@item.ProductId</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice.ToString("N0") đ</td>
+                    <td>@((item.Quantity * item.UnitPrice).ToString("N0")) đ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

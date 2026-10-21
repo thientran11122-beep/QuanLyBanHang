@@ -1,0 +1,62 @@
+﻿@model List<QuanLyBanHang.Models.Product>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+
+<div class="products-page">
+    <section class="section-heading products-page-heading">
+        <div>
+            <span class="eyebrow">KHO HÀNG CỬA HÀNG</span>
+            <h1>Danh sách sản phẩm</h1>
+            <p>Danh sách sản phẩm mẫu và tình trạng kinh doanh hiện tại.</p>
+        </div>
+        <span class="products-count">@Model.Count sản phẩm</span>
+    </section>
+
+    @await Html.PartialAsync("_ProductCards", Model)
+
+    <section class="inventory-section" aria-labelledby="inventory-title">
+        <div class="inventory-heading">
+            <h2 id="inventory-title">Thông tin tồn kho</h2>
+            <span>Số lượng và trạng thái sản phẩm</span>
+        </div>
+        <div class="table-responsive inventory-table-wrap">
+            <table class="table inventory-table align-middle">
+                <thead>
+                    <tr>
+                        <th>Mã SP</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Giá bán</th>
+                        <th>Tồn kho</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="product-id">#@item.Id.ToString("D3")</td>
+                            <td class="inventory-product-name">@item.Name</td>
+                            <td>
+                                @(item.CategoryId == 1 ? "Điện thoại" : item.CategoryId == 2 ? "Laptop" : "Phụ kiện")
+                            </td>
+                            <td class="inventory-price">@item.Price.ToString("N0") đ</td>
+                            <td>
+                                <span class="stock-badge @(item.StockQuantity > 0 ? "stock-available" : "stock-empty")">
+                                    @(item.StockQuantity > 0 ? $"{item.StockQuantity} sản phẩm" : "Hết hàng")
+                                </span>
+                            </td>
+                            <td>
+                                <span class="product-status @(item.IsActive ? "status-active" : "status-inactive")">
+                                    @(item.IsActive ? "Đang bán" : "Ngừng bán")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

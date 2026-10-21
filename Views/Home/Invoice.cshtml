@@ -1,0 +1,144 @@
+﻿@model List<QuanLyBanHang.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Danh sách hóa đơn";
+    var totalRevenue = Model.Sum(invoice => invoice.TotalAmount);
+    var averageInvoice = Model.Count > 0 ? totalRevenue / Model.Count : 0;
+    var customerCount = Model.Select(invoice => invoice.CustomerName).Distinct().Count();
+}
+
+<div class="invoices-page">
+    <section class="invoices-page-heading">
+        <div>
+            <span class="eyebrow">THEO DÕI GIAO DỊCH</span>
+            <h1>Hóa đơn</h1>
+            <p>Tra cứu các giao dịch và thông tin khách hàng của cửa hàng.</p>
+        </div>
+        <a asp-controller="Home" asp-action="InvoiceDetail" class="invoice-detail-link">
+            Xem chi tiết hóa đơn
+            <span aria-hidden="true">→</span>
+        </a>
+    </section>
+
+    <section class="invoice-summary-grid" aria-label="Tổng quan hóa đơn">
+        <article class="invoice-summary-card">
+            <span class="invoice-summary-icon summary-blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M7 3.5h10a2 2 0 0 1 2 2v15l-3-1.5-4 1.5-4-1.5-3 1.5v-15a2 2 0 0 1 2-2Z" /><path d="M9 8h6m-6 4h6m-6 4h3" /></svg>
+            </span>
+            <span class="invoice-summary-copy">
+                <span>Tổng hóa đơn</span>
+                <strong>@Model.Count</strong>
+                <small>Giao dịch đã ghi nhận</small>
+            </span>
+        </article>
+        <article class="invoice-summary-card">
+            <span class="invoice-summary-icon summary-green" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3v18m5-14H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+            </span>
+            <span class="invoice-summary-copy">
+                <span>Tổng giá trị</span>
+                <strong>@totalRevenue.ToString("N0") <small>đ</small></strong>
+                <small>Tổng giá trị hóa đơn</small>
+            </span>
+        </article>
+        <article class="invoice-summary-card">
+            <span class="invoice-summary-icon summary-violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h17" /><path d="m7 15 4-4 3 2 6-7" /><path d="M16 6h4v4" /></svg>
+            </span>
+            <span class="invoice-summary-copy">
+                <span>Giá trị trung bình</span>
+                <strong>@averageInvoice.ToString("N0") <small>đ</small></strong>
+                <small>Trung bình mỗi hóa đơn</small>
+            </span>
+        </article>
+        <article class="invoice-summary-card">
+            <span class="invoice-summary-icon summary-amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20" /><circle cx="10" cy="7.5" r="3.5" /><path d="M16 4.2a3.5 3.5 0 0 1 0 6.6M17 15h.5a3.5 3.5 0 0 1 3.5 3.5V20" /></svg>
+            </span>
+            <span class="invoice-summary-copy">
+                <span>Khách hàng</span>
+                <strong>@customerCount</strong>
+                <small>Khách hàng có giao dịch</small>
+            </span>
+        </article>
+    </section>
+
+    <section class="invoice-list-section" aria-labelledby="invoice-list-title">
+        <div class="invoice-list-heading">
+            <div>
+                <h2 id="invoice-list-title">Danh sách giao dịch</h2>
+                <p>Thông tin các hóa đơn gần đây</p>
+            </div>
+            <span class="invoice-record-count">@Model.Count hóa đơn</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table invoice-table align-middle">
+                <thead>
+                    <tr>
+                        <th>Mã hóa đơn</th>
+                        <th>Ngày lập</th>
+                        <th>Khách hàng</th>
+                        <th>Nhân viên</th>
+                        <th>Số điện thoại</th>
+                        <th class="text-end">Tổng tiền</th>
+                        <th><span class="visually-hidden">Thao tác</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="7" class="invoice-empty-state">
+                                <span class="invoice-empty-icon" aria-hidden="true">—</span>
+                                <strong>Chưa có hóa đơn</strong>
+                                <span>Các giao dịch sẽ được hiển thị tại đây.</span>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.OrderByDescending(invoice => invoice.CreatedAt))
+                        {
+                            <tr>
+                                <td><span class="invoice-id">HD-@item.Id.ToString("D4")</span></td>
+                                <td>
+                                    <span class="invoice-date">@item.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                    <small class="invoice-date-day">@item.CreatedAt.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))</small>
+                                </td>
+                                <td>
+                                    <span class="invoice-customer">@item.CustomerName</span>
+                                    <small class="invoice-customer-note">Khách hàng</small>
+                                </td>
+                                <td>
+                                    <span class="invoice-employee">
+                                        <span class="invoice-employee-avatar" aria-hidden="true">@(item.EmployeeId == 1 ? "A" : item.EmployeeId == 2 ? "B" : "N")</span>
+                                        @(item.EmployeeId == 1 ? "Nguyễn Văn An" : item.EmployeeId == 2 ? "Trần Thị Bình" : $"Nhân viên #{item.EmployeeId}")
+                                    </span>
+                                </td>
+                                <td>@(string.IsNullOrWhiteSpace(item.CustomerPhone) ? "—" : item.CustomerPhone)</td>
+                                <td class="text-end">
+                                    <span class="invoice-amount">@item.TotalAmount.ToString("N0") <small>đ</small></span>
+                                </td>
+                                <td class="text-end">
+                                    <a asp-controller="Home" asp-action="InvoiceDetail" class="invoice-row-link" aria-label="Xem chi tiết hóa đơn HD-@item.Id.ToString("D4")" title="Xem chi tiết">
+                                        <span aria-hidden="true">↗</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @if (Model.Count > 0)
+                {
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">Tổng giá trị các hóa đơn</td>
+                            <td class="text-end">@totalRevenue.ToString("N0") <small>đ</small></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+        </div>
+    </section>
+</div>

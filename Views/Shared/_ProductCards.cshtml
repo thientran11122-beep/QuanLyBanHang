@@ -1,0 +1,44 @@
+﻿@model List<QuanLyBanHang.Models.Product>
+
+<div class="product-grid">
+    @foreach (var product in Model)
+    {
+        var categoryName = product.CategoryId == 1 ? "Điện thoại" : product.CategoryId == 2 ? "Laptop" : "Phụ kiện";
+        var categoryStyle = product.CategoryId == 1 ? "product-art-phone" : product.CategoryId == 2 ? "product-art-laptop" : "product-art-accessory";
+
+        <article class="product-card">
+            <div class="product-art @categoryStyle" aria-hidden="true">
+                @if (product.CategoryId == 1)
+                {
+                    <svg viewBox="0 0 100 100"><rect x="32" y="12" width="36" height="76" rx="9" /><path d="M43 20h14M47 79h6" /></svg>
+                }
+                else if (product.CategoryId == 2)
+                {
+                    <svg viewBox="0 0 100 100"><rect x="20" y="22" width="60" height="43" rx="5" /><path d="M13 74h74l-6 7H19zM39 72h22" /></svg>
+                }
+                else
+                {
+                    <svg viewBox="0 0 100 100"><path d="M36 22v22m28-22v22M31 42h38v13a19 19 0 0 1-38 0zM50 74v11m0-11H36m14 0h14" /></svg>
+                }
+                <span class="product-category">@categoryName</span>
+                @if (!product.IsActive)
+                {
+                    <span class="product-unavailable">Ngừng bán</span>
+                }
+            </div>
+            <div class="product-card-body">
+                <div class="product-card-meta">
+                    <span>Mã SP #@product.Id.ToString("D3")</span>
+                    <span class="product-stock">@((product.StockQuantity > 0) ? $"Còn {product.StockQuantity}" : "Hết hàng")</span>
+                </div>
+                <h2>@product.Name</h2>
+                <div class="product-card-footer">
+                    <strong>@product.Price.ToString("N0") <small>đ</small></strong>
+                    <span class="product-status @(product.IsActive ? "status-active" : "status-inactive")">
+                        @(product.IsActive ? "Đang bán" : "Ngừng bán")
+                    </span>
+                </div>
+            </div>
+        </article>
+    }
+</div>

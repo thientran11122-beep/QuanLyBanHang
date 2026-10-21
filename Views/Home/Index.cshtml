@@ -1,0 +1,104 @@
+﻿@model List<QuanLyBanHang.Models.Product>
+
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="home-page">
+    <section class="welcome-section" aria-labelledby="welcome-title">
+        <div class="welcome-copy">
+            <span class="eyebrow"><span class="status-dot"></span> Không gian làm việc của bạn</span>
+            <h1 id="welcome-title">Quản lý cửa hàng<br /><span>đơn giản hơn mỗi ngày.</span></h1>
+            <p>Theo dõi sản phẩm, nhân viên và hóa đơn trong một không gian tập trung, dễ sử dụng.</p>
+            <a asp-controller="Home" asp-action="Product" class="welcome-link">
+                Khám phá sản phẩm
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+        </div>
+        <div class="welcome-image">
+            <img src="~/images/banner1.jpg" alt="Sản phẩm điện tử và thiết bị công nghệ" />
+        </div>
+    </section>
+
+    <section class="home-products" aria-labelledby="featured-products-title">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">SẢN PHẨM TRONG CỬA HÀNG</span>
+                <h2 id="featured-products-title">Sản phẩm nổi bật</h2>
+                <p>Một vài mặt hàng đang được kinh doanh.</p>
+            </div>
+            <a asp-controller="Home" asp-action="Product" class="products-view-all">
+                Xem tất cả sản phẩm
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+        @await Html.PartialAsync("_ProductCards", Model.Where(product => product.IsActive).Take(4).ToList())
+    </section>
+
+    <section class="management-section" aria-labelledby="management-title">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">BẮT ĐẦU TẠI ĐÂY</span>
+                <h2 id="management-title">Shop Thiên đẹp trai</h2>
+                <p>Chọn chức năng bạn muốn truy cập.</p>
+            </div>
+        </div>
+
+        <div class="management-grid">
+            <a asp-controller="Home" asp-action="Category" class="management-card">
+                <span class="management-icon icon-violet">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5.75A1.75 1.75 0 0 1 5.75 4h4.1c.46 0 .9.18 1.23.51l1.16 1.16c.14.14.33.22.53.22h5.48A1.75 1.75 0 0 1 20 7.64v10.61A1.75 1.75 0 0 1 18.25 20H5.75A1.75 1.75 0 0 1 4 18.25z" /><path d="M4 9h16" /></svg>
+                </span>
+                <span class="management-card-copy">
+                    <strong>Danh mục sản phẩm</strong>
+                    <span>Phân loại và sắp xếp danh mục</span>
+                </span>
+                <svg class="management-arrow" aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+
+            <a asp-controller="Home" asp-action="Product" class="management-card">
+                <span class="management-icon icon-blue">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" /><path d="m4.3 7.7 7.7 4.4 7.7-4.4M12 12v9m-8-13.5 8 4.5 8-4.5" /></svg>
+                </span>
+                <span class="management-card-copy">
+                    <strong>Danh sách sản phẩm</strong>
+                    <span>Xem và quản lý hàng hóa</span>
+                </span>
+                <svg class="management-arrow" aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+
+            <a asp-controller="Home" asp-action="Employee" class="management-card">
+                <span class="management-icon icon-teal">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20" /><circle cx="10" cy="7.5" r="3.5" /><path d="M16 4.2a3.5 3.5 0 0 1 0 6.6M17 15h.5a3.5 3.5 0 0 1 3.5 3.5V20" /></svg>
+                </span>
+                <span class="management-card-copy">
+                    <strong>Danh sách nhân viên</strong>
+                    <span>Thông tin đội ngũ cửa hàng</span>
+                </span>
+                <svg class="management-arrow" aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+
+            <a asp-controller="Home" asp-action="Invoice" class="management-card">
+                <span class="management-icon icon-amber">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-3-1.8-3 1.8-3-1.8-3 1.8z" /><path d="M9 8h6m-6 4h6m-6 4h3" /></svg>
+                </span>
+                <span class="management-card-copy">
+                    <strong>Hóa đơn</strong>
+                    <span>Tra cứu các giao dịch bán hàng</span>
+                </span>
+                <svg class="management-arrow" aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+
+            <a asp-controller="Home" asp-action="InvoiceDetail" class="management-card">
+                <span class="management-icon icon-rose">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4h10a2 2 0 0 1 2 2v14l-3-1.8-3 1.8-3-1.8L7 20z" /><path d="M10 9h6m-6 4h6m-6 4h3" /></svg>
+                </span>
+                <span class="management-card-copy">
+                    <strong>Chi tiết hóa đơn</strong>
+                    <span>Xem sản phẩm trong từng hóa đơn</span>
+                </span>
+                <svg class="management-arrow" aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+        </div>
+    </section>
+</div>

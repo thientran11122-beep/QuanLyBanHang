@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuanLyBanHang</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QuanLyBanHang.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header id="top" class="app-header">
+        <nav class="navbar navbar-expand-lg app-navbar">
+            <div class="container">
+                <a class="navbar-brand app-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img class="brand-mark" src="~/images/logo.jpg" alt="Logo QuanLyBanHang" />
+                    <span>Shop <span class="brand-accent">Thiên đẹp trai</span><small>QUẢN LÝ BÁN HÀNG</small></span>
+                </a>
+                <button class="navbar-toggler app-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation"
+                        aria-expanded="false" aria-label="Mở menu điều hướng">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavigation">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link app-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Tổng quan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link app-nav-link" asp-area="" asp-controller="Home" asp-action="Category">Danh mục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link app-nav-link" asp-area="" asp-controller="Home" asp-action="Product">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link app-nav-link" asp-area="" asp-controller="Home" asp-action="Employee">Nhân viên</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="nav-link app-nav-cta" asp-area="" asp-controller="Home" asp-action="Invoice">Hóa đơn <span aria-hidden="true">↗</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container app-container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="app-footer-main">
+                <div class="app-footer-about">
+                    <a class="app-footer-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img class="brand-mark" src="~/images/logo.jpg" alt="Logo QuanLyBanHang" />
+                        <span>Shop <span class="brand-accent">Thiên đẹp trai</span></span>
+                    </a>
+                    <p>Quản lý cửa hàng dễ dàng hơn với các công cụ theo dõi sản phẩm, nhân viên và hóa đơn.</p>
+                </div>
+
+                <div class="app-footer-links">
+                    <h2>Quản lý</h2>
+                    <a asp-area="" asp-controller="Home" asp-action="Category">Danh mục sản phẩm</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Product">Danh sách sản phẩm</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Employee">Danh sách nhân viên</a>
+                </div>
+
+                <div class="app-footer-links">
+                    <h2>Giao dịch</h2>
+                    <a asp-area="" asp-controller="Home" asp-action="Invoice">Hóa đơn</a>
+                    <a asp-area="" asp-controller="Home" asp-action="InvoiceDetail">Chi tiết hóa đơn</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Chính sách quyền riêng tư</a>
+                </div>
+            </div>
+
+            <div class="app-footer-bottom">
+                <span>&copy; @DateTime.Now.Year <strong>Shop Thiên đẹp trai</strong>. Đồng hành cùng cửa hàng của bạn.</span>
+                <a href="#top">Trở về đầu trang <span aria-hidden="true">↑</span></a>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

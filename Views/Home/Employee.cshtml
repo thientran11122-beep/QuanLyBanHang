@@ -1,0 +1,56 @@
+﻿@model List<QuanLyBanHang.Models.Employee>
+
+@{
+    ViewData["Title"] = "Danh sách nhân viên";
+}
+
+<div class="employees-page">
+    <section class="section-heading employees-page-heading">
+        <div>
+            <span class="eyebrow">ĐỘI NGŨ CỬA HÀNG</span>
+            <h1>Danh sách nhân viên</h1>
+            <p>Thông tin liên hệ và trạng thái làm việc của nhân viên.</p>
+        </div>
+        <span class="products-count">@Model.Count nhân viên</span>
+    </section>
+
+    <section class="inventory-section employees-list" aria-label="Bảng danh sách nhân viên">
+        <div class="table-responsive inventory-table-wrap">
+            <table class="table inventory-table align-middle">
+                <thead>
+                    <tr>
+                        <th>Mã NV</th>
+                        <th>Nhân viên</th>
+                        <th>Số điện thoại</th>
+                        <th>Tài khoản</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="product-id">#@item.Id.ToString("D3")</td>
+                            <td>
+                                <div class="employee-identity">
+                                    <span class="employee-avatar" aria-hidden="true">@item.FullName.Substring(0, 1)</span>
+                                    <span>
+                                        <strong>@item.FullName</strong>
+                                        <small>@item.Email</small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>@item.Phone</td>
+                            <td><span class="employee-user-id">@item.UserId</span></td>
+                            <td>
+                                <span class="product-status @(item.IsActive ? "status-active" : "status-inactive")">
+                                    @(item.IsActive ? "Đang làm việc" : "Ngừng hoạt động")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
